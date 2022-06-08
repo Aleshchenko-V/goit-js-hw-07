@@ -22,19 +22,23 @@ function createGallery(collection) {
 }
 
 function addGalleryToPage(el) {
-  galleryEl.innerHTML = el;
+  galleryEl.insertAdjacentHTML("beforeend", el);
 }
 
 addGalleryToPage(galleryListItems);
 
 galleryEl.addEventListener("click", (e) => {
   e.preventDefault();
-  if (e.target.nodeName === "IMG") {
-    const instance = basicLightbox.create(
-      `
-				<img class="create" src="${e.target.dataset.source}">
-			`
-    );
-    instance.show();
+
+  const isGalleryImg = e.target.classList.contains("gallery__image");
+
+  if (!isGalleryImg) {
+    return;
   }
+  const instance = basicLightbox.create(
+    `
+  		<img class="create" src="${e.target.dataset.source}">
+  	`
+  );
+  instance.show();
 });
